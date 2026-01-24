@@ -1,0 +1,54 @@
+# AMC Attendance System Flowchart
+
+```mermaid
+flowchart TD
+    Start((Start)) --> Login[Login Page<br>index.html]
+    
+    %% Authentication Flow
+    Login --> |Enter Credentials| API_Auth{Valid Credentials?}
+    API_Auth -- No --> Error[Show Error Message] --> Login
+    API_Auth -- Yes --> CheckRole{Check User Role}
+    
+    %% Student Flow
+    CheckRole -- Student --> StudentDash[Student Dashboard<br>dashboard-student.html]
+    StudentDash --> LoadMyAtt[Load Personal Attendance]
+    LoadMyAtt --> ViewStats[View Stats & History]
+    StudentDash --> Logout_S[Logout] --> Login
+    
+    %% Teacher Flow
+    CheckRole -- Teacher --> TeacherDash[Teacher Dashboard<br>dashboard-teacher.html]
+    
+    %% Teacher: Attendance Management
+    TeacherDash --> SelDate[Select Date & Session]
+    SelDate --> FetchStudents[Fetch Students &<br>Existing Status]
+    FetchStudents --> RenderTable[Render Student List<br>with Toggles]
+    RenderTable --> MarkAtt[Mark Present/Absent]
+    MarkAtt --> SubmitBulk[Submit Bulk Attendance]
+    SubmitBulk --> DB_Save[(Save to Database)]
+    DB_Save -- Success --> RefreshTable[Refresh Table &<br>Update Calendar]
+    
+    %% Teacher: Student Management
+    TeacherDash --> AddStudentBtn[Click 'Add Student']
+    AddStudentBtn --> CheckRoll{Check Roll Number}
+    CheckRoll -- Exists --> ShowExist[Show Existing Student Info]
+    CheckRoll -- New --> CreateForm[Show Create Form]
+    CreateForm --> InputDetails[Enter Name, Email, Pwd]
+    InputDetails --> SubmitNew[Create New Student]
+    SubmitNew --> DB_Add[(Add to Database)]
+    DB_Add --> CloseModal[Close Modal &<br>Refresh List]
+    
+    %% Teacher: Calendar Navigation
+    TeacherDash --> NavCal[Navigate Calendar]
+    NavCal --> SelDate
+    
+    TeacherDash --> Logout_T[Logout] --> Login
+    
+    %% Styling
+    classDef page fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef database fill:#dfd,stroke:#333,stroke-width:2px;
+    classDef logic fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    
+    class Login,StudentDash,TeacherDash page;
+    class DB_Save,DB_Add database;
+    class API_Auth,CheckRole,CheckRoll logic;
+```

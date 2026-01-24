@@ -1,0 +1,42 @@
+
+SYSTEM DESIGN DOCUMENT
+----------------------
+
+Architecture:
+Client-server architecture using REST APIs.
+Frontend communicates with backend over HTTP using JWT authentication.
+
+Database Design:
+
+Users Collection:
+- id
+- name
+- email
+- password (hashed)
+- role (teacher/student)
+
+Attendance Collection:
+- id
+- studentId
+- date
+- status (Present/Absent)
+- markedBy (teacherId)
+
+Authentication Flow:
+1. User logs in
+2. JWT token generated
+3. Token sent with each request
+4. Backend validates token
+
+Dashboard Design:
+- Total number of students
+- Present count
+- Absent count
+- Attendance percentage
+- Date-wise filters
+
+Security Design:
+- JWT-based authentication
+- Password hashing using bcrypt
+- Input sanitization middleware
+- Role-based access control

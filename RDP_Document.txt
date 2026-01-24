@@ -1,0 +1,45 @@
+
+REQUIREMENTS & DEVELOPMENT PLAN (RDP)
+------------------------------------
+
+Project Title:
+College Attendance Management System
+
+Objective:
+To develop a web-based attendance management system where teachers can mark daily
+attendance (Present/Absent) of students, view dashboards, and students can view
+their attendance records securely.
+
+User Roles:
+1. Teacher (Admin)
+   - Mark daily attendance
+   - View dashboards and reports
+   - Manage students
+2. Student
+   - View personal attendance records
+
+Functional Requirements:
+- User authentication (Teacher & Student)
+- Daily attendance marking
+- Attendance filters (date, student, status)
+- Dashboard with analytics
+- REST API for all operations
+
+Non-Functional Requirements:
+- Secure authentication using JWT
+- Password hashing
+- Input validation and sanitization
+- Scalable and modular architecture
+
+Technology Stack:
+Frontend: HTML, CSS, JavaScript
+Backend: Node.js (Express)
+Database: MongoDB
+Deployment: Vercel (Frontend), Render (Backend)
+
+API Overview:
+POST /api/auth/login
+POST /api/auth/register
+POST /api/attendance/mark
+GET  /api/attendance/view
+GET  /api/dashboard/stats
