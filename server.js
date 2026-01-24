@@ -11,6 +11,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Serve static files from frontend directory
+app.use(express.static('frontend'));
+
 // Database Connection
 connectDB();
 
@@ -20,7 +23,7 @@ app.use('/api/attendance', require('./backend/routes/attendanceRoutes'));
 app.use('/api/users', require('./backend/routes/userRoutes'));
 
 app.get('/', (req, res) => {
-    res.send('API is running...');
+    res.sendFile(__dirname + '/frontend/index.html');
 });
 
 const PORT = process.env.PORT || 5000;
