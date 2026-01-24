@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - AMC Attendance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="frontend/css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">AMC Attendance</a>
+            <div>
+                <span id="user-name" style="margin-right: 1rem;">Student</span>
+                <button onclick="logout()" class="btn"
+                    style="padding: 0.5rem 1rem; font-size: 0.875rem;">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>My Attendance</h1>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2>Attendance History</h2>
+                <div id="stats">
+                    <!-- Stats will go here -->
+                </div>
+            </div>
+
+            <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <th style="padding: 0.75rem;">Date</th>
+                        <th style="padding: 0.75rem;">Subject</th>
+                        <th style="padding: 0.75rem;">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="attendanceTableBody">
+                    <!-- Rows -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="frontend/js/app.js?v=2"></script>
+    <script>
+        // Init Student specific logic
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth('student');
+            loadMyAttendance();
+        });
+    </script>
+</body>
+
+</html>
