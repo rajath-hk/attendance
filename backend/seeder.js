@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const User = require('./models/userModel');
 const Attendance = require('./models/attendanceModel');
-const connectDB = require('./config/db');
+const { connectDB } = require('./config/db');
 
 dotenv.config();
 
@@ -37,7 +36,9 @@ const importData = async () => {
             }
         ];
 
-        await User.create(users);
+        for (const user of users) {
+            await User.create(user);
+        }
 
         console.log('Data Imported!');
         process.exit();

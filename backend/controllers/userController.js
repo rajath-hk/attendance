@@ -1,5 +1,4 @@
 const User = require('../models/userModel');
-const bcrypt = require('bcryptjs');
 
 // @desc    Add a new student
 // @route   POST /api/users/add
@@ -8,18 +7,16 @@ const addStudent = async (req, res) => {
     const { name, email, password, rollNumber } = req.body;
 
     try {
-        const userExists = await User.findOne({ email });
+        const userExists = await User.findByEmail(email);
         if (userExists) {
             return res.status(400).json({ message: 'User already exists with this email' });
         }
 
-        const rollExists = await User.findOne({ rollNumber });
+        const rollExists = await User.findByRollNumber(rollNumber);
         if (rollExists) {
             return res.status(400).json({ message: 'Student already exists with this Roll Number' });
         }
 
-        // Hash password handled by pre-save hook in model
-        // We just create the user
         const user = await User.create({
             name,
             email,
@@ -30,10 +27,10 @@ const addStudent = async (req, res) => {
 
         if (user) {
             res.status(201).json({
-                _id: user._id,
+                _id: user.id,
                 name: user.name,
                 email: user.email,
-                rollNumber: user.rollNumber,
+                rollNumber: user.roll_number,
                 role: user.role
             });
         } else {
@@ -52,8 +49,7 @@ const checkStudent = async (req, res) => {
     const { rollNumber } = req.body;
 
     try {
-        // Prevent NoSQL Injection by sanitizing rollNumber
-        const student = await User.findOne({ rollNumber: String(rollNumber) });
+        const student = await User.findByRollNumber(rollNumber);
 
         if (student) {
             return res.json({
@@ -61,7 +57,7 @@ const checkStudent = async (req, res) => {
                 student: {
                     name: student.name,
                     email: student.email,
-                    rollNumber: student.rollNumber
+                    rollNumber: student.roll_number
                 }
             });
         } else {
